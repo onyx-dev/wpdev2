@@ -96,7 +96,7 @@
 						'container'			=> 'false',
 						'echo'				=> true,
 						'container'			=> false,
-						'items_wrap' 		=> '<select id="%1$s" class="%2$s select-dropdown-menu">%3$s</select>',
+						'items_wrap' 		=> '<select id="%1$s" class="%2$s select-dropdown-menu phone-visible">%3$s</select>',
 						'walker' 			=> new Ons_Walker_Nav_Menu_Select
 						));?>
 			</nav><!-- #access -->
