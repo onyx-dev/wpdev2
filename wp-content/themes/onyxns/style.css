@@ -1,0 +1,105 @@
+/*
+Theme Name: OnyxNS
+Theme URI: http://onyxns.com
+Author: AlexK
+Author URI:
+Description: OnyxNS theme 
+Version: 1.5
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: custom
+Text Domain: 
+*/
+/*****************************************************
+*Media queries 
+******************************************************/
+
+/* Landscape phones and down */
+@media (max-width: 479px) {
+	/* utility classes */
+	.phone-hidden, .tablet-visible, .desktop-visible{
+		display:none;
+	}
+	
+	#page{
+		width:310px;
+	}
+}
+     
+/* Landscape phone to portrait tablet */
+@media (min-width: 480px) and (max-width: 767px) {
+	/* utility classes */
+	.phone-hidden, .tablet-visible, .desktop-visible {
+		display:none;
+	}
+	
+	
+	#page{
+		width:470px;
+	}
+}
+   
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 959px) {
+	/* Utility classes */
+	.phone-visible, .tablet-hidden, .desktop-visible{
+		display:none;
+	}
+	
+	#page{
+			width:760px;
+	}
+}
+   
+/* Large desktop */
+@media (min-width: 960px) {
+	/* Utility classes */
+	.phone-visible, .tablet-visible, .desktop-hidden{
+		display:none;
+	}
+	
+	#page{
+		width:940px;
+	}
+}
+    
+    
+#page{
+	margin:0 auto;
+	
+}
+#branding{
+	border:1px solid grey;
+}
+#nav-above, #nav-below{
+	border:1px solid blue;
+}
+.post, .page{
+	border:1px solid red;
+}
+#content{
+	border:1px solid green;
+}
+/**************************************************
+* clearfix
+***************************************************/
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
