@@ -18,7 +18,16 @@
 			<?php else : ?>
 			<h1 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr__( 'Permalink to %s', 'onyxns' ), the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php the_title(); ?></a></h1>
 			<?php endif; ?>
-
+			<?php
+			//Featured Image
+			if ( has_post_thumbnail() ) :
+				$featured_id = get_post_thumbnail_id();
+				
+			?>
+				<img src="<?php echo get_template_directory_uri(); ?>/lib/ons_resize/resize.php?src=<?php echo wp_get_attachment_url($featured_id); ?>&h=100&w=940&a=t" alt="<?php the_title(); ?>" />
+			
+			<?php endif; ?>
+			
 			<?php if ( 'post' == get_post_type() ) : ?>
 			<div class="entry-meta">
 				<?php onyxns_posted_on(); ?>
