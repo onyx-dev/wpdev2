@@ -231,25 +231,22 @@ function onyxns_content_nav( $nav_id, $range=3 ) {
 		</nav><!-- #<?php echo $nav_id;?> -->
 		<?php 
 		}elseif(is_single()){
-			//display links to next and previous products in same category
+			//display links to next and previous post in the same categoriess
 			global $post;
-			$product_tag = get_post_meta( $post->ID , 'product_tag' , true );
-		
-			$args = array(
-					'numberposts' => -1,
-					'order'           => 'ASC',
-					'meta_key'        => 'product_tag',
-					'meta_value'      => $product_tag,
-					'post_type'       => 'product', );
-			$list_of_posts = get_posts($args);
-		
-			$pages = array();
-		
-		
-			if(empty($list_of_posts)){
-				$pagelist = array();
-				echo '<h2>post_type=product&order=ASC&meta_key=product_tag&posts_per_page='.$products_per_page.'&meta_value=' . $product_tag.'</h2>';
+			
+			$cat_ids = $pages = array();
+			
+			foreach((get_the_category()) as $category) {
+				$cat_ids[] = $category->cat_ID;
 			}
+			$categories = implode(",", $cat_ids);
+			
+			$args = array(
+					'numberposts' 		=> -1,
+					'order'          	=> 'ASC',
+					'category'			=>  $categories);
+			
+			$list_of_posts = get_posts($args);
 		
 			foreach ($list_of_posts as $product_post) {
 				$pages[] += $product_post->ID;
@@ -372,84 +369,8 @@ function onyxns_posted_on() {
 }
 endif;
 
-/**
- * Transforms output from wp_nav_menu to layout required by Bootstrap
- * Note: $class has to be set through bootstrap_menu_helper and not wp_nav_menu
-*/
-function bootstrap_menu_helper($menu, $class){
 
-	//Add $class variable to first <ul> tag
-	$pattern = '/(<ul[^>]*?)(class=[\'\"])?([^\'\"]*)?([\'\"])?(>.*)/s';
-	$replacement = '$1 class="$3 ' . $class . '" $5';
-	$menu = preg_replace($pattern, $replacement, $menu);
 
-	//Add structure to <li class="dropdown"> 
-	$pattern = '/(<li [^>]*dropdown)([^<]*<a [^>]*)(>[^<]*)(<\/a>)/sU';
-	$replacement = '$1$2 class="dropdown-toggle" data-toggle="dropdown" $3 <b class="caret"></b> $4';
-	$menu = preg_replace($pattern, $replacement, $menu);
-	
-	//Add class to <ul class="submenu">
-	$pattern = '/(<ul [^>]*sub-menu)/s';
-	$replacement = '$1 dropdown-menu';
-	$menu = preg_replace($pattern, $replacement, $menu);
-
-	//Add 'active' class to current <li> tag
-	$pattern = '/(<li [^>]*(current-menu-item|current_page_item|current-menu-parent))/s';
-	$replacement = '$1 active';
-	$menu = preg_replace($pattern, $replacement, $menu);
-
-	echo $menu;
-}
-/**
- * Prepaire menu for bootstrap
- * add dropdown class to items with subs
- */
- /* add_filter('wp_nav_menu_objects', function ($items) {
-    $hasSub = function ($menu_item_id, &$items) {
-        foreach ($items as $item) {
-            if ($item->menu_item_parent && $item->menu_item_parent==$menu_item_id) {
-                return true;
-            }
-        }
-        return false;
-    };
-
-    foreach ($items as &$item) {
-        if ($hasSub($item->ID, &$items)) {
-            $item->classes[] = 'dropdown'; 
-        }
-    }
-    return $items;    
-});
- */ 
-/**
-* Transforms output from wp_nav_menu to <select> control
-* 
-*/
-  	function wp_nav_menu_select_transform($menu, $class){
-  	
-  		//Add $class variable to first <ul> tag
-  		$pattern = '/(<ul[^>]*?)(class=[\'\"])?([^\'\"]*)?([\'\"])?(>.*)/s';
-  		$replacement = '$1 class="$3 ' . $class . '" $5';
-  		$menu = preg_replace($pattern, $replacement, $menu);
-  	
-  		//Add structure to <li class="dropdown">
-  		$pattern = '/(<li [^>]*dropdown)([^<]*<a [^>]*)(>[^<]*)(<\/a>)/sU';
-  		$replacement = '$1$2 class="dropdown-toggle" data-toggle="dropdown" $3 <b class="caret"></b> $4';
-  		$menu = preg_replace($pattern, $replacement, $menu);
-  	
-  		//Add class to <ul class="submenu">
-  		$pattern = '/(<ul [^>]*sub-menu)/s';
-  		$replacement = '$1 dropdown-menu';
-  		$menu = preg_replace($pattern, $replacement, $menu);
-  	
-  		//Add 'active' class to current <li> tag
-  		$pattern = '/(<li [^>]*(current-menu-item|current_page_item|current-menu-parent))/s';
-  		$replacement = '$1 active';
-  		$menu = preg_replace($pattern, $replacement, $menu);
-  	
-  		echo $menu;
-  	}
   
 if ( ! function_exists( 'onyxns_comment' ) ) :
 /**
